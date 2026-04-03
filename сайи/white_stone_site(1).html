@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WHITE STONE</title>
+  <style>
+    :root {
+      --white: #ffffff;
+      --milk: #f8f7f3;
+      --line: rgba(255,255,255,0.38);
+      --glass: rgba(255,255,255,0.16);
+      --glass-strong: rgba(255,255,255,0.22);
+      --dark: #070707;
+      --dark-soft: #111111;
+      --text-dark: #151515;
+      --shadow: 0 20px 60px rgba(0,0,0,0.18);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --max: 1240px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #ffffff 0%, #f7f7f5 100%);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      overflow: hidden;
+    }
+    .hero__bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.78);
+      transform: scale(1.02);
+    }
+    .hero__overlay {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 35%, rgba(255,255,255,0.10) 100%),
+        linear-gradient(90deg, rgba(0,0,0,0.26) 0%, rgba(0,0,0,0.12) 48%, rgba(0,0,0,0.28) 100%);
+    }
+    .hero__content {
+      position: relative; z-index: 2;
+      padding: 48px 0; width: 100%;
+    }
+    .hero__title {
+      font-size: clamp(56px, 11vw, 170px);
+      line-height: 0.92; letter-spacing: 0.12em;
+      font-weight: 800; color: rgba(255,255,255,0.98);
+      text-transform: uppercase; text-wrap: balance;
+      max-width: 1000px;
+      text-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    }
+    .hero__subtitle {
+      margin-top: 18px; display: inline-block;
+      padding: 14px 22px; border-radius: 999px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      color: rgba(255,255,255,0.74);
+      font-size: clamp(14px, 2vw, 20px); letter-spacing: 0.05em;
+    }
+    .hero__cta { margin-top: 28px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn {
+      border: none; cursor: pointer; font-size: 15px; font-weight: 600;
+      padding: 15px 22px; border-radius: 999px;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn--light { background: rgba(255,255,255,0.95); color: #111; box-shadow: var(--shadow); }
+    .btn--ghost {
+      background: rgba(255,255,255,0.08); color: white;
+      border: 1px solid rgba(255,255,255,0.22);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    }
+
+    /* SERVICES */
+    .services {
+      position: relative; padding: 110px 0;
+      background: linear-gradient(180deg, #f7f6f2 0%, #f2f1ed 100%);
+    }
+    .services__grid {
+      display: grid; grid-template-columns: 0.92fr 1.08fr;
+      gap: 28px; align-items: start;
+    }
+    .services__intro {
+      position: sticky; top: 24px; padding: 32px;
+      border-radius: var(--radius-xl);
+      background: rgba(255,255,255,0.45);
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    }
+    .eyebrow {
+      display: inline-block; padding: 9px 14px; border-radius: 999px;
+      background: rgba(255,255,255,0.75); color: #444;
+      font-size: 12px; letter-spacing: 0.12em;
+      text-transform: uppercase; margin-bottom: 18px;
+    }
+    .services__intro h2 {
+      font-size: clamp(32px, 4vw, 54px); line-height: 1; margin-bottom: 16px;
+    }
+    .services__intro p { color: #555; font-size: 17px; line-height: 1.6; }
+    .services__list { display: grid; gap: 18px; }
+    .service-card {
+      position: relative; display: grid;
+      grid-template-columns: 130px 1fr; gap: 18px; padding: 18px;
+      border-radius: 28px; background: var(--glass-strong);
+      border: 1px solid rgba(255,255,255,0.45);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.08);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      overflow: hidden;
+    }
+    .service-card::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.03));
+      pointer-events: none;
+    }
+    .service-card__image {
+      position: relative; z-index: 1;
+      width: 100%; height: 110px; border-radius: 20px; object-fit: cover;
+    }
+    .service-card__content {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .service-card__title {
+      font-size: clamp(22px, 2.4vw, 30px); font-weight: 700;
+      color: #161616; margin-bottom: 8px;
+    }
+    .service-card__text { color: #5a5a5a; line-height: 1.6; font-size: 15px; max-width: 560px; }
+
+    /* MORTGAGE */
+    .mortgage {
+      padding: 110px 0;
+      background: linear-gradient(180deg, #f2f1ed 0%, #eeecea 100%);
+    }
+    .mortgage-hero-card {
+      border-radius: var(--radius-xl);
+      background: rgba(255,255,255,0.45);
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      padding: 60px 40px;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .mortgage-hero-card__title {
+      font-size: clamp(36px, 6vw, 86px);
+      font-weight: 800; line-height: 1;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #161616;
+    }
+    .mortgage-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+    }
+    .mortgage-card {
+      position: relative; border-radius: 28px;
+      background: var(--glass-strong);
+      border: 1px solid rgba(255,255,255,0.45);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.08);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      overflow: hidden; padding: 18px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .mortgage-card::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.03));
+      pointer-events: none;
+    }
+    .mortgage-card__img-wrap {
+      position: relative; z-index: 1;
+      border-radius: 20px; overflow: hidden;
+      background: rgba(255,255,255,0.6);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mortgage-card__img {
+      width: 100%; height: 160px; object-fit: contain; padding: 16px;
+    }
+    .mortgage-card__text {
+      position: relative; z-index: 1;
+      color: #5a5a5a; font-size: 15px; line-height: 1.6;
+    }
+
+    /* CONTACTS */
+    .contacts {
+      background: radial-gradient(circle at top, #1a1a1a 0%, #090909 42%, #000 100%);
+      color: white; padding: 110px 0 120px;
+    }
+    .contacts__wrap {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 28px; align-items: stretch;
+    }
+    .contacts__left, .contacts__right {
+      border-radius: 32px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      padding: 34px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.22);
+    }
+    .contacts__left h3, .contacts__right h3 {
+      font-size: clamp(28px, 3vw, 42px); margin-bottom: 14px;
+    }
+    .contacts__left p, .contacts__right p {
+      color: rgba(255,255,255,0.72); line-height: 1.7; font-size: 16px;
+    }
+    .contact-buttons { margin-top: 26px; display: grid; gap: 14px; }
+    .contact-btn {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; width: 100%; padding: 18px 22px;
+      border-radius: 22px; border: 1px solid rgba(255,255,255,0.16);
+      background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
+      color: white; font-weight: 600; font-size: 16px;
+      cursor: pointer; text-align: left;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .contact-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,0.28);
+      background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
+    }
+    .contact-btn small {
+      display: block; color: rgba(255,255,255,0.56);
+      font-weight: 500; font-size: 12px; margin-bottom: 3px;
+    }
+    .contact-btn span:last-child {
+      color: rgba(255,255,255,0.82); font-size: 14px; white-space: nowrap;
+    }
+    .footer-note { margin-top: 20px; color: rgba(255,255,255,0.45); font-size: 13px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 980px) {
+      .services__grid, .contacts__wrap { grid-template-columns: 1fr; }
+      .services__intro { position: relative; top: 0; }
+    }
+    @media (max-width: 720px) {
+      .hero { min-height: 88svh; }
+      .hero__content { padding: 36px 0 48px; }
+      .hero__subtitle { max-width: 100%; border-radius: 22px; }
+      .service-card { grid-template-columns: 1fr; }
+      .service-card__image { height: 180px; }
+      .services, .contacts, .mortgage { padding: 80px 0; }
+      .services__intro, .contacts__left, .contacts__right { padding: 22px; border-radius: 24px; }
+      .contact-btn { padding: 16px 18px; border-radius: 18px; }
+      .mortgage-hero-card { padding: 40px 22px; border-radius: 24px; }
+      .mortgage-grid { grid-template-columns: 1fr; }
+      .mortgage-card { border-radius: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero" id="top">
+    <img class="hero__bg" src="il_fullxfull.4443683696_rkqk.avif" alt="Современный дом WHITE STONE" />
+    <div class="hero__overlay"></div>
+    <div class="container hero__content">
+      <h1 class="hero__title">WHITE STONE</h1>
+      <div class="hero__subtitle">проффесиональные строительные работы</div>
+      <div class="hero__cta">
+        <a class="btn btn--light" href="#services">Наши работы</a>
+        <a class="btn btn--ghost" href="#contacts">Связаться</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="container services__grid">
+      <div class="services__intro">
+        <div class="eyebrow">WHITE STONE</div>
+        <h2>Надежные строительные решения</h2>
+        <p>Ваш дом — это место уюта и спокойствия, где важна каждая деталь — доверьте его создание профессионалам, которые знают своё дело.</p>
+      </div>
+      <div class="services__list">
+        <article class="service-card">
+          <img class="service-card__image" src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80" alt="Бетонные работы" />
+          <div class="service-card__content">
+            <div class="service-card__title">Бетонные работы</div>
+            <div class="service-card__text">Фундаменты, монолитные конструкции и надежные бетонные решения для частного строительства.</div>
+          </div>
+        </article>
+        <article class="service-card">
+          <img class="service-card__image" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=80" alt="Кровельные работы" />
+          <div class="service-card__content">
+            <div class="service-card__title">Кровельные работы</div>
+            <div class="service-card__text">Монтаж и обустройство кровли с акцентом на долговечность, эстетику и точность исполнения.</div>
+          </div>
+        </article>
+        <article class="service-card">
+          <img class="service-card__image" src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80" alt="Монтажные работы" />
+          <div class="service-card__content">
+            <div class="service-card__title">Монтажные работы</div>
+            <div class="service-card__text">Аккуратный монтаж строительных элементов и комплексный подход к каждому этапу проекта.</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="mortgage" id="mortgage">
+    <div class="container">
+      <article class="mortgage-hero-card">
+        <h2 class="mortgage-hero-card__title">ВЗЯТЬ ДОМ В ИПОТЕКУ</h2>
+      </article>
+      <div class="mortgage-grid">
+        <article class="mortgage-card">
+          <div class="mortgage-card__img-wrap">
+            <img class="mortgage-card__img" src="домклик.png" alt="Домклик" />
+          </div>
+          <p class="mortgage-card__text">Домклик — онлайн сервис поиска, покупки, продажи, управления, аренды недвижимости и безопасного проведения сделок с жильём</p>
+        </article>
+        <article class="mortgage-card">
+          <div class="mortgage-card__img-wrap">
+            <img class="mortgage-card__img" src="Логотип_АО__АИЖК_.jpg" alt="Банк ДОМ.РФ" />
+          </div>
+          <p class="mortgage-card__text">Банк ДОМ.РФ — это универсальный Банк с широкой филиальной сетью. Кредиты, вклады, ипотека, банковские карты. Услуги для всех категорий клиентов.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="contacts" id="contacts">
+    <div class="container contacts__wrap">
+      <div class="contacts__left">
+        <div class="eyebrow">Контакты</div>
+        <h3>Связаться с WHITE STONE</h3>
+        <p>Звоните в любое время, график работы 8:00 - 22:00 по МСК.</p>
+        <div class="contact-buttons">
+          <button class="contact-btn" id="copyPhoneBtn" type="button">
+            <span>
+              <small>Телефон</small>
+              8 977 672 38 18
+            </span>
+            <span id="phoneStatus">Нажать, чтобы копировать</span>
+          </button>
+          <a class="contact-btn" href="mailto:white.ston3@mail.ru?subject=Заявка%20WHITE%20STONE">
+            <span>
+              <small>Почта</small>
+              white.ston3@mail.ru
+            </span>
+            <span>Открыть почту</span>
+          </a>
+        </div>
+        <div class="footer-note">Сайт временный и все работы обсуждаются по телефону</div>
+      </div>
+      <div class="contacts__right">
+        <div class="eyebrow">О компании</div>
+        <h3>КТО МЫ ?</h3>
+        <p>Наша компания обладает значительным опытом в сфере строительства частных и коммерческих объектов. Мы предоставляем широкий спектр строительных услуг, включая возведение бетонных конструкций, строительство домов «под ключ», выполнение кровельных и ландшафтных работ, а также другие виды строительно-монтажных услуг.
+
+Обращаясь в White Stone, вы получаете гарантию высокого качества выполняемых работ, соблюдения согласованных сроков и внимательного, клиентоориентированного подхода на всех этапах сотрудничества..</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const phoneBtn = document.getElementById('copyPhoneBtn');
+    const phoneStatus = document.getElementById('phoneStatus');
+    const phoneNumber = '8 977 672 38 18';
+
+    phoneBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(phoneNumber);
+        phoneStatus.textContent = 'Номер скопирован';
+        setTimeout(() => { phoneStatus.textContent = 'Нажать, чтобы копировать'; }, 2200);
+      } catch (error) {
+        phoneStatus.textContent = 'Не удалось скопировать';
+        setTimeout(() => { phoneStatus.textContent = 'Нажать, чтобы копировать'; }, 2200);
+      }
+    });
+  </script>
+
+</body>
+</html>
